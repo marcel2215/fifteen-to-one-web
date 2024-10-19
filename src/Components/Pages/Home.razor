@@ -1,7 +1,39 @@
 ﻿@page "/"
+@inject QuestionManager QuestionManager
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="flex flex-col justify-between h-screen p-8 sm:p-12 md:p-24">
+    <div class="space-y-6 text-center">
+        <div class="space-y-2">
+            <div class="text-xs font-bold uppercase">Question @_questionNumber</div>
+            <div>@_currentQuestion?.Content</div>
+        </div>
+        <DPDivider />
+        <div class="space-y-2">
+            <div class="text-xs font-bold uppercase">Answer</div>
+            <div>@_currentQuestion?.Answer</div>
+        </div>
+    </div>
+    <div>
+        <DPButton Style="ButtonStyle.Accent" IsFullWidth="true" Clicked="NextQuestion">Next Question</DPButton>
+    </div>
+</div>
 
-Welcome to your new app.
+@code {
+    private Question? _currentQuestion;
+
+    private int _questionNumber = 1;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _currentQuestion = QuestionManager.GetRandomQuestion();
+    }
+
+    private void NextQuestion()
+    {
+        _currentQuestion = QuestionManager.GetRandomQuestion();
+        _questionNumber++;
+    }
+}
