@@ -1,8 +1,10 @@
 using FifteenToOne.Components;
+using FifteenToOne.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddQuestionManager();
 
 var app = builder.Build();
 
@@ -16,4 +18,5 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 app.UseStaticFiles();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.InitializeQuestionManager();
 app.Run();
